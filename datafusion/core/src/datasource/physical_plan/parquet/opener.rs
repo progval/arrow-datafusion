@@ -96,7 +96,7 @@ impl FileOpener for ParquetOpener {
         Ok(Box::pin(async move {
             let options = ArrowReaderOptions::new().with_page_index(enable_page_index);
 
-            let metadata_timer = file_metrics.metadata_load_time.timer();
+            let mut metadata_timer = file_metrics.metadata_load_time.timer();
             let metadata =
                 ArrowReaderMetadata::load_async(&mut reader, options.clone()).await?;
             let mut schema = metadata.schema().clone();
