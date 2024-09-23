@@ -435,7 +435,7 @@ pub fn build_row_filter(
     schema_mapping: Arc<dyn SchemaMapper>,
 ) -> Result<Option<RowFilter>> {
     let rows_filtered = &file_metrics.pushdown_rows_filtered;
-    let time = &file_metrics.pushdown_eval_time;
+    let time = &file_metrics.row_pushdown_eval_time;
 
     // Split into conjuncts:
     // `a = 1 AND b = 2 AND c = 3` -> [`a = 1`, `b = 2`, `c = 3`]

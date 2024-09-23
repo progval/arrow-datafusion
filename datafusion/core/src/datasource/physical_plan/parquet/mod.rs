@@ -1833,7 +1833,7 @@ mod tests {
         // null row for 5 rows total
         assert_eq!(get_value(&metrics, "pushdown_rows_filtered"), 5);
         assert!(
-            get_value(&metrics, "pushdown_eval_time") > 0,
+            get_value(&metrics, "row_pushdown_eval_time") > 0,
             "no eval time in metrics: {metrics:#?}"
         );
     }

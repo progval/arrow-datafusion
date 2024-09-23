@@ -41,8 +41,8 @@ pub struct ParquetFileMetrics {
     pub bytes_scanned: Count,
     /// Total rows filtered out by predicates pushed into parquet scan
     pub pushdown_rows_filtered: Count,
-    /// Total time spent evaluating pushdown filters
-    pub pushdown_eval_time: Time,
+    /// Total time spent evaluating row-level pushdown filters
+    pub row_pushdown_eval_time: Time,
     /// Total rows filtered out by parquet page index
     pub page_index_rows_filtered: Count,
     /// Total time spent evaluating parquet page index filters
@@ -84,9 +84,9 @@ impl ParquetFileMetrics {
             .with_new_label("filename", filename.to_string())
             .counter("pushdown_rows_filtered", partition);
 
-        let pushdown_eval_time = MetricBuilder::new(metrics)
+        let row_pushdown_eval_time = MetricBuilder::new(metrics)
             .with_new_label("filename", filename.to_string())
-            .subset_time("pushdown_eval_time", partition);
+            .subset_time("row_pushdown_eval_time", partition);
         let page_index_rows_filtered = MetricBuilder::new(metrics)
             .with_new_label("filename", filename.to_string())
             .counter("page_index_rows_filtered", partition);
@@ -103,7 +103,7 @@ impl ParquetFileMetrics {
             row_groups_pruned_statistics,
             bytes_scanned,
             pushdown_rows_filtered,
-            pushdown_eval_time,
+            row_pushdown_eval_time,
             page_index_rows_filtered,
             page_index_eval_time,
         }
